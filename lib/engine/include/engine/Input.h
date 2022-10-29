@@ -10,12 +10,12 @@
 namespace engine
 {
 enum class KeyEventType {
-    down,
+    down = 1,
     up,
 };
 
 enum class Key {
-    q,
+    q = 1,
     w,
     e,
     r,

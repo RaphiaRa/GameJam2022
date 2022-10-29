@@ -6,9 +6,9 @@ MainScene::MainScene()
     world_.attachTo(&node_);
 }
 
-void MainScene::update()
+void MainScene::update(std::chrono::nanoseconds delta)
 {
-    world_.update();
+    world_.update(delta);
 }
 
 void MainScene::attachTo(engine::SceneNode* node)

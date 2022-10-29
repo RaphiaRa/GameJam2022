@@ -16,8 +16,8 @@ class TextureArea : public Texture {
     operator bool() const { return texture_ != NULL; }
 
   private:
-    const Texture* texture_;
-    Area area_;
+    const Texture* texture_ = nullptr;
+    Area area_              = engine::nullArea;
 };
 } // namespace engine
 #endif

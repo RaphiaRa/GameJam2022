@@ -44,7 +44,7 @@ void SceneNode::setRot(double rot)
     notifyNeedsUpdate();
 }
 
-void SceneNode::rot(double rot)
+void SceneNode::rotate(double rot)
 {
     rot_ += rot;
     notifyNeedsUpdate();
@@ -66,6 +66,11 @@ void SceneNode::setIsVisible(bool isVisible)
 {
     isVisible_ = isVisible;
     notifyNeedsUpdate();
+}
+
+const engine::math::Vector<double, 3>& SceneNode::absPos() const
+{
+    return absPos_;
 }
 
 void SceneNode::attach(SceneObject* obj)
@@ -171,6 +176,6 @@ void SceneNode::collectRenderables(RenderableList& list) const
     }
     for (const auto entry : sceneObjects_) {
         if (entry->isRenderable())
-            list.emplace(pos_[2], entry);
+            list.push_back({ absPos_[2], entry });
     }
 }

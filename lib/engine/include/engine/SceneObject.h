@@ -10,6 +10,7 @@ class SceneObject {
     virtual void notifyAttach()                                                                                                               = 0;
     virtual void notifyDetach()                                                                                                               = 0;
     virtual bool isRenderable() { return false; }
+    virtual bool isSolid() { return false; }
 
   public:
     virtual ~SceneObject() = default;

@@ -3,17 +3,51 @@
 #include "Assets.h"
 #include "Input.h"
 
+Attack::Attack()
+        : node_("attack"), tileSet_(Assets::get().getTexture("attack1"), 2, 1)
+{
+    animation_.addAnimation("attack", engine::Animation({ engine::AnimationFrame{ tileSet_.at(0, 0), std::chrono::milliseconds(50) },
+                                                          engine::AnimationFrame{ tileSet_.at(1, 0), std::chrono::milliseconds(100) } }));
+    node_.attach(&animation_);
+    node_.setPos({ -20.0, -20.0, 0 });
+}
+
+void Attack::update(std::chrono::nanoseconds delta)
+{
+    animation_.update(delta);
+}
+
+void Attack::attachTo(engine::SceneNode* node)
+{
+    node->attach(&node_);
+}
+
+void Attack::detachFrom(engine::SceneNode* node)
+{
+    node->detach(&node_);
+}
+
+void Attack::start()
+{
+    if (!animation_.isPlaying())
+        animation_.play("attack");
+}
+
 Character::Character()
         : tileSet_(Assets::get().getTexture("char1"), 2, 1),
-          sprite_(&tileSet_.at(1, 0)),
+          animatedSprite_(tileSet_.at(1, 0)),
           node_("character"),
           motion_{ 0, 0 },
           speed_(5)
 {
-    node_.attach(&sprite_);
+    animatedSprite_.addAnimation("run", engine::Animation({ engine::AnimationFrame{ tileSet_.at(1, 0), std::chrono::milliseconds(100) },
+                                                            engine::AnimationFrame{ tileSet_.at(0, 0), std::chrono::milliseconds(150) } }));
+
+    node_.attach(&animatedSprite_);
+    attack_.attachTo(&node_);
 }
 
-void Character::update()
+void Character::update(std::chrono::nanoseconds delta)
 {
     engine::math::Vector<double, 3> t{ 0, 0, 0 };
     if (motion_.down)
@@ -29,7 +63,14 @@ void Character::update()
     else if (t[0] < 0)
         isFlipped_ = false;
     node_.translate(t);
+    if ((t[0] != 0 || t[1] != 0) && !animatedSprite_.isPlaying()) {
+        animatedSprite_.play("run", true);
+    } else if (t[0] == 0 && t[1] == 0 && animatedSprite_.isPlaying()) {
+        animatedSprite_.stop();
+    }
     node_.setIsFlipped(isFlipped_);
+    animatedSprite_.update(delta);
+    attack_.update(delta);
 }
 
 void Character::attachTo(engine::SceneNode* node)
@@ -56,7 +97,10 @@ void Character::handleInput(const engine::KeyEvent& ev)
             motion_.left = 1;
         if (ev.key == engine::Key::d)
             motion_.right = 1;
+        if (ev.key == engine::Key::q)
+            attack_.start();
     } else if (ev.type == engine::KeyEventType::up) {
+        animatedSprite_.stop();
         if (ev.key == engine::Key::w)
             motion_.up = 0;
         if (ev.key == engine::Key::s)
@@ -66,4 +110,9 @@ void Character::handleInput(const engine::KeyEvent& ev)
         if (ev.key == engine::Key::d)
             motion_.right = 0;
     }
+}
+
+const engine::math::Vector<double, 3>& Character::absPos() const
+{
+    return node_.absPos();
 }

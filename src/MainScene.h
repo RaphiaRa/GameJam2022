@@ -7,7 +7,7 @@
 class MainScene final : public GameEntity {
   public:
     MainScene();
-    void update() override;
+    void update(std::chrono::nanoseconds delta) override;
     void attachTo(engine::SceneNode* node) override;
     void detachFrom(engine::SceneNode* node) override;
 

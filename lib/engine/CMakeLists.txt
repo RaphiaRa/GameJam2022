@@ -15,7 +15,9 @@ add_library(Engine
     src/Sprite.cpp
     src/TileSet.cpp
     src/TileMap.cpp
-    src/Input.cpp)
+    src/Input.cpp
+    src/AnimatedSprite.cpp
+    )
 
 set_property(TARGET Engine PROPERTY CXX_STANDARD 17)
 target_include_directories(

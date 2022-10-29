@@ -13,6 +13,7 @@ Game::Game(const Config& config)
             this->isRunning_ = false; });
 }
 
+static bool compareSceneObject(const engine::RenderableEntry& lh, const engine::RenderableEntry& rh) { return (lh.first < rh.first); }
 void Game::run()
 {
 
@@ -24,17 +25,29 @@ void Game::run()
 
     engine::RenderableList renderableList;
     isRunning_ = true;
+    auto tp1   = std::chrono::steady_clock::now();
+
+    std::chrono::nanoseconds elapsed = std::chrono::nanoseconds(0);
+    std::chrono::nanoseconds clock   = std::chrono::seconds(1 / 60);
     while (isRunning_) {
         renderableList.clear();
         sceneManager_.root().collectRenderables(renderableList);
         inputHandler().update();
-        mainScene.update();
-        sceneManager_.root().update();
-        renderer->clear();
-        for (auto& pair : renderableList) {
-            const engine::Renderable* renderable = reinterpret_cast<const engine::Renderable*>(pair.second);
-            renderable->copyTo(*renderer);
+        auto tp2   = std::chrono::steady_clock::now();
+        auto delta = tp2 - tp1;
+        tp1        = tp2;
+        elapsed += delta;
+        if (elapsed > clock) {
+            mainScene.update(delta);
+            sceneManager_.root().update();
+            renderer->clear();
+            std::sort(renderableList.begin(), renderableList.end());
+            for (auto& pair : renderableList) {
+                const engine::Renderable* renderable = reinterpret_cast<const engine::Renderable*>(pair.second);
+                renderable->copyTo(*renderer);
+            }
+            renderer->update();
+            elapsed = std::chrono::milliseconds(0);
         }
-        renderer->update();
     }
 }

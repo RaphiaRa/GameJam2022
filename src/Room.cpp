@@ -16,7 +16,7 @@ Room::Room()
     node_.setPos({ 0, 0, -1 });
 }
 
-void Room::update()
+void Room::update(std::chrono::nanoseconds delta)
 {
 }
 

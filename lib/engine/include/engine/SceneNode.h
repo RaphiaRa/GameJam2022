@@ -6,11 +6,12 @@
 #include <list>
 #include <string>
 #include <string_view>
-#include <map>
+#include <vector>
 
 namespace engine
 {
-using RenderableList = std::map<int, SceneObject*>;
+using RenderableEntry = std::pair<int, SceneObject*>;
+using RenderableList  = std::vector<RenderableEntry>;
 class SceneNode : public Movable {
   public:
     enum class UpdateType : unsigned int {
@@ -33,10 +34,12 @@ class SceneNode : public Movable {
     void setScale(const math::Vector<double, 2>& scale) override;
     void scale(const math::Vector<double, 2>& scale) override;
     void setRot(double rot) override;
-    void rot(double rot) override;
+    void rotate(double rot) override;
     void setIsFlipped(bool isFlipped) override;
     void flip() override;
     void setIsVisible(bool isVisible) override;
+
+    const math::Vector<double, 3>& absPos() const;
 
     void attach(SceneObject* obj);
     void detach(SceneObject* obj);

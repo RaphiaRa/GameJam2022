@@ -157,14 +157,14 @@ TEST_CASE("SceneNode is rotated", "[SceneNode::rot]")
     }
     SECTION("Rotate childNode by 90 degrees")
     {
-        childNode.rot(90);
+        childNode.rotate(90);
         rootNode.update();
         CHECK(obj.pos_ == Vector3d({ 1.0, 0.0, 0.0 }));
         CHECK(obj.rot_ == 90);
     }
     SECTION("Rotate rootNode by 90 degrees")
     {
-        rootNode.rot(90);
+        rootNode.rotate(90);
         rootNode.update();
         CHECK(engine::math::max_norm(obj.pos_ - Vector3d({ 0.0, 1.0, 0.0 })) < std::numeric_limits<double>::epsilon());
         CHECK(obj.rot_ == 90);

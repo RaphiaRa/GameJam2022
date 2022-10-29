@@ -12,7 +12,7 @@ class Movable {
     virtual void setScale(const math::Vector<double, 2>& scale) = 0;
     virtual void scale(const math::Vector<double, 2>& scale)    = 0;
     virtual void setRot(double rot)                             = 0;
-    virtual void rot(double rot)                                = 0;
+    virtual void rotate(double rot)                             = 0;
     virtual void setIsFlipped(bool isFlipped)                   = 0;
     virtual void flip()                                         = 0;
     virtual void setIsVisible(bool isVisible)                   = 0;

@@ -1,14 +1,14 @@
-#ifndef ROOM_H
-#define ROOM_H
+#ifndef MOB_H
+#define MOB_H
 
 #include "GameEntity.h"
 
-#include <engine/TileMap.h>
+#include <engine/AnimatedSprite.h>
 #include <engine/TileSet.h>
 
-class Room : public GameEntity {
+class Mob : public GameEntity {
   public:
-    Room();
+    Mob(double x, double y);
     void update(std::chrono::nanoseconds delta) override;
     void attachTo(engine::SceneNode* node) override;
     void detachFrom(engine::SceneNode* node) override;
@@ -16,7 +16,7 @@ class Room : public GameEntity {
   private:
     engine::SceneNode node_;
     engine::TileSet tileSet_;
-    engine::TileMap tileMap_;
+    engine::AnimatedSprite animation_;
 };
 
 #endif
