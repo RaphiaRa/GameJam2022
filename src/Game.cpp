@@ -13,7 +13,6 @@ Game::Game(const Config& config)
             this->isRunning_ = false; });
 }
 
-static bool compareSceneObject(const engine::RenderableEntry& lh, const engine::RenderableEntry& rh) { return (lh.first < rh.first); }
 void Game::run()
 {
 
