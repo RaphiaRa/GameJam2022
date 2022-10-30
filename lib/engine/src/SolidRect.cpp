@@ -9,6 +9,8 @@ SolidRect::SolidRect(double width, double height)
 
 void SolidRect::update(const math::Vector<double, 3>& pos, const math::Vector<double, 2>& scale, double rot, bool isFlipped, bool isVisible)
 {
+    (void)rot;
+    (void)isFlipped;
     isVisible_ = isVisible;
     pos_[0]    = pos[0];
     pos_[1]    = pos[1];
