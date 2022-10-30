@@ -27,6 +27,7 @@ void Ui::update(std::chrono::nanoseconds delta)
     apBarNode_.setScale({ scale, 1.0 });
     scale = hp_ / 100.0;
     hpBarNode_.setScale({ scale, 1.0 });
+    (void)delta;
 }
 
 void Ui::attachTo(engine::SceneNode* node)
