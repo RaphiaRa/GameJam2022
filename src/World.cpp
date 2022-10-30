@@ -90,7 +90,7 @@ void World::update(std::chrono::nanoseconds delta)
         if (sinceLastWave_ >= std::chrono::seconds(2)) {
             std::random_device dev;
             std::mt19937 rng(dev());
-            std::uniform_int_distribution<std::mt19937::result_type> dist(8, 25 + score_ / 3);
+            std::uniform_int_distribution<std::mt19937::result_type> dist(8, 15 + score_ / 3);
             int count = (int)dist(rng);
             for (int k = 0; k < count; ++k) {
                 int xshift = dist(rng);

@@ -22,12 +22,11 @@ Mob::Mob(double x, double y, int score, engine::SceneNode& followPoint)
     node_.attach(&solid_);
     animation_.play("idle", true);
     node_.setPos({ x, y, 0.0 });
-    node_.scale(engine::math::Vector<double, 2>{ 0.5, 0.5 });
     hp_ += (1.5 * (double)score);
     speed_ += score / 30 + shift2 / 30.0;
     power_ += (int)((double)score / 25.0);
-    double scale = 1.0 + ((double)(score) / 35.0);
-    node_.scale(scale * engine::math::Vector<double, 2>{ 1.0, 1.0 });
+    double scale = 0.5 + ((double)(score) / 50.0);
+    node_.setScale(engine::math::Vector<double, 2>{ scale, scale });
 }
 
 template<typename T>
@@ -54,6 +53,10 @@ void Mob::update(std::chrono::nanoseconds delta)
                 normalized[1] += sgn(normalized[1]) * abs(normalized[0]);
                 normalized[0] = 0.0;
             }
+            bool isFlipped = false;
+            if (normalized[0] > 0)
+                isFlipped = true;
+            node_.setIsFlipped(isFlipped);
             node_.translate(perSecond * speed_ * normalized);
         }
     }
