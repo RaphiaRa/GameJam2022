@@ -18,6 +18,7 @@ Room::Room()
 
 void Room::update(std::chrono::nanoseconds delta)
 {
+    (void)delta;
 }
 
 void Room::attachTo(engine::SceneNode* node)
