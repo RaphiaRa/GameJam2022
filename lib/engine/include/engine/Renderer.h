@@ -24,7 +24,7 @@ struct Area {
 };
 inline bool operator==(const Area& a, const Area& b) { return a.x == b.x && a.y == b.y && a.width == b.width && a.height == b.height; };
 inline bool operator!=(const Area& a, const Area& b) { return !(a == b); };
-inline bool operator==(const Area& a, const NullArea& b) { return a == Area{ 0, 0, 0, 0 }; };
+inline bool operator==(const Area& a, const NullArea& b) { (void)b; return a == Area{ 0, 0, 0, 0 }; };
 inline bool operator!=(const Area& a, const NullArea& b) { return !(a == b); };
 
 class Renderer {
