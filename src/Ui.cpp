@@ -10,8 +10,8 @@ Ui::Ui()
           hpBarNode_("hp_bar"),
           hpBarTexture_(Assets::get().getTexture("hp_bar1"), engine::nullArea),
           hpBarSprite_(&hpBarTexture_),
-          ap_(0),
-          hp_(0)
+          hp_(0),
+          ap_(0)
 {
     node_.attach(&apBarNode_);
     node_.attach(&hpBarNode_);
