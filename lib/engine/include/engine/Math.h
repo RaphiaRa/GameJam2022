@@ -1,7 +1,8 @@
 #ifndef ENGINE_MATH_H
 #define ENGINE_MATH_H
 #include <array>
-//#include <cmath>
+#include <algorithm>
+#include <cmath>
 
 namespace engine
 {
