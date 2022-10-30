@@ -76,13 +76,11 @@ const engine::math::Vector<double, 3>& SceneNode::absPos() const
 void SceneNode::attach(SceneObject* obj)
 {
     sceneObjects_.push_back(obj);
-    obj->notifyAttach();
     notifyNeedsUpdate(UpdateType::childNodes);
 }
 
 void SceneNode::detach(SceneObject* obj)
 {
-    obj->notifyDetach();
     sceneObjects_.remove(obj);
     notifyNeedsUpdate(UpdateType::childNodes);
 }

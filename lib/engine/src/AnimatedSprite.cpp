@@ -77,14 +77,6 @@ void AnimatedSprite::addAnimation(std::string_view id, Animation animation)
     animation_.emplace(id, std::move(animation));
 }
 
-void AnimatedSprite::notifyAttach()
-{
-}
-
-void AnimatedSprite::notifyDetach()
-{
-}
-
 void AnimatedSprite::update(const math::Vector<double, 3>& pos, const math::Vector<double, 2>& scale, double rot, bool isFlipped, bool isVisible)
 {
     pos_       = pos;

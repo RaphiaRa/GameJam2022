@@ -17,6 +17,7 @@ add_library(Engine
     src/TileMap.cpp
     src/Input.cpp
     src/AnimatedSprite.cpp
+    src/SolidRect.cpp
     )
 
 set_property(TARGET Engine PROPERTY CXX_STANDARD 17)

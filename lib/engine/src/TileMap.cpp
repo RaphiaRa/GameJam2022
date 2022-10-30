@@ -26,14 +26,6 @@ void TileMap::copyTo(Renderer& renderer) const
     }
 }
 
-void TileMap::notifyAttach()
-{
-}
-
-void TileMap::notifyDetach()
-{
-}
-
 void TileMap::update(const math::Vector<double, 3>& pos, const math::Vector<double, 2>& scale, double rot, bool isFlipped, bool isVisible)
 {
     pos_       = pos;

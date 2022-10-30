@@ -5,6 +5,8 @@
 #include "Mob.h"
 #include "Room.h"
 
+#include <chrono>
+
 class World : public GameEntity {
   public:
     World();
@@ -16,7 +18,10 @@ class World : public GameEntity {
     engine::SceneNode node_;
     Character character_;
     Room room_;
-    std::vector<std::unique_ptr<Mob>> mobs_;
+    std::list<std::unique_ptr<Mob>> mobs_;
+    std::chrono::nanoseconds sinceLastWave_;
+    bool haveWave_;
+    int score_;
 };
 
 #endif

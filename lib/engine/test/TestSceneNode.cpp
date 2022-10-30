@@ -8,8 +8,6 @@ using Vector3d = engine::math::Vector<double, 3>;
 using Vector2d = engine::math::Vector<double, 2>;
 class MockSceneObject : public engine::SceneObject {
     void update(const Vector3d& pos, const Vector2d& scale, double rot, bool isFlipped, bool isVisible) override;
-    void notifyAttach() override;
-    void notifyDetach() override;
 
   public:
     ~MockSceneObject() override = default;
@@ -207,13 +205,4 @@ void MockSceneObject::update(const Vector3d& pos, const Vector2d& scale, double 
     rot_       = rot;
     isFlipped_ = isFlipped;
     isVisible_ = isVisible;
-}
-
-void MockSceneObject::notifyAttach()
-{
-    isAttached_ = true;
-}
-void MockSceneObject::notifyDetach()
-{
-    isAttached_ = false;
 }

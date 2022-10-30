@@ -4,11 +4,14 @@
 #include "Input.h"
 
 Attack::Attack()
-        : node_("attack"), tileSet_(Assets::get().getTexture("attack1"), 2, 1)
+        : node_("attack"), boxNode_("box"), tileSet_(Assets::get().getTexture("attack1"), 2, 1), solid_(64, 100)
 {
     animation_.addAnimation("attack", engine::Animation({ engine::AnimationFrame{ tileSet_.at(0, 0), std::chrono::milliseconds(50) },
                                                           engine::AnimationFrame{ tileSet_.at(1, 0), std::chrono::milliseconds(100) } }));
     node_.attach(&animation_);
+    node_.attach(&boxNode_);
+    boxNode_.attach(&solid_);
+    boxNode_.setPos({ 0.0, 20.0, 0 });
     node_.setPos({ -20.0, -20.0, 0 });
 }
 
@@ -33,17 +36,24 @@ void Attack::start()
         animation_.play("attack");
 }
 
+bool Attack::isActive() const
+{
+    return animation_.isPlaying();
+}
+
 Character::Character()
         : tileSet_(Assets::get().getTexture("char1"), 2, 1),
           animatedSprite_(tileSet_.at(1, 0)),
           node_("character"),
           motion_{ 0, 0 },
-          speed_(5)
+          speed_(5),
+          solid_(48, 48)
 {
     animatedSprite_.addAnimation("run", engine::Animation({ engine::AnimationFrame{ tileSet_.at(1, 0), std::chrono::milliseconds(100) },
                                                             engine::AnimationFrame{ tileSet_.at(0, 0), std::chrono::milliseconds(150) } }));
 
     node_.attach(&animatedSprite_);
+    node_.attach(&solid_);
     attack_.attachTo(&node_);
 }
 
@@ -71,6 +81,14 @@ void Character::update(std::chrono::nanoseconds delta)
     node_.setIsFlipped(isFlipped_);
     animatedSprite_.update(delta);
     attack_.update(delta);
+
+    if (isImmune_) {
+        immuneTime_ += delta;
+        if (immuneTime_ > std::chrono::milliseconds(300)) {
+            isImmune_   = false;
+            immuneTime_ = std::chrono::nanoseconds(0);
+        }
+    }
 }
 
 void Character::attachTo(engine::SceneNode* node)
@@ -97,8 +115,10 @@ void Character::handleInput(const engine::KeyEvent& ev)
             motion_.left = 1;
         if (ev.key == engine::Key::d)
             motion_.right = 1;
-        if (ev.key == engine::Key::q)
+        if (ev.key == engine::Key::q && qPushed_ == false) {
             attack_.start();
+            qPushed_ = true;
+        }
     } else if (ev.type == engine::KeyEventType::up) {
         animatedSprite_.stop();
         if (ev.key == engine::Key::w)
@@ -109,10 +129,15 @@ void Character::handleInput(const engine::KeyEvent& ev)
             motion_.left = 0;
         if (ev.key == engine::Key::d)
             motion_.right = 0;
+        if (ev.key == engine::Key::q)
+            qPushed_ = false;
     }
 }
 
-const engine::math::Vector<double, 3>& Character::absPos() const
+void Character::damage(int dmg)
 {
-    return node_.absPos();
+    if (!isImmune_) {
+        hp_ -= dmg;
+        isImmune_ = true;
+    }
 }

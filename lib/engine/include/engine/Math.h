@@ -93,6 +93,14 @@ engine::math::Vector<T, N> operator*(engine::math::Vector<T, N> w, double l)
     return w;
 }
 
+template<typename T, std::size_t N>
+engine::math::Vector<T, N> operator/(engine::math::Vector<T, N> w, double l)
+{
+    for (std::size_t i = 0; i < N; ++i)
+        w[i] /= l;
+    return w;
+}
+
 template<typename T, std::size_t N, std::size_t M>
 engine::math::Vector<T, N> operator*(const engine::math::Matrix<T, N, M>& m, const engine::math::Vector<T, M> v)
 {

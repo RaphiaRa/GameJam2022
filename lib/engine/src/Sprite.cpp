@@ -16,14 +16,6 @@ void Sprite::update(const math::Vector<double, 3>& pos, const math::Vector<doubl
     isVisible_ = isVisible;
 }
 
-void Sprite::notifyAttach()
-{
-    isVisible_ = true;
-}
-void Sprite::notifyDetach()
-{
-    isVisible_ = false;
-}
 void Sprite::copyTo(Renderer& renderer) const
 {
     if (!isVisible_)

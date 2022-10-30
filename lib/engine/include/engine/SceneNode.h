@@ -40,6 +40,7 @@ class SceneNode : public Movable {
     void setIsVisible(bool isVisible) override;
 
     const math::Vector<double, 3>& absPos() const;
+    const math::Vector<double, 3>& pos() const { return pos_; };
 
     void attach(SceneObject* obj);
     void detach(SceneObject* obj);

@@ -56,8 +56,6 @@ class AnimatedSprite : public Renderable {
     bool isPlaying() const;
 
   private:
-    void notifyAttach() override;
-    void notifyDetach() override;
     void update(const math::Vector<double, 3>& pos, const math::Vector<double, 2>& scale, double rot, bool isFlipped, bool isVisible) override;
 
     TextureArea defaultArea_;

@@ -30,17 +30,17 @@ void Game::run()
     std::chrono::nanoseconds elapsed = std::chrono::nanoseconds(0);
     std::chrono::nanoseconds clock   = std::chrono::seconds(1 / 60);
     while (isRunning_) {
-        renderableList.clear();
-        sceneManager_.root().collectRenderables(renderableList);
         inputHandler().update();
         auto tp2   = std::chrono::steady_clock::now();
         auto delta = tp2 - tp1;
         tp1        = tp2;
         elapsed += delta;
         if (elapsed > clock) {
-            mainScene.update(delta);
             sceneManager_.root().update();
+            mainScene.update(delta);
             renderer->clear();
+            renderableList.clear();
+            sceneManager_.root().collectRenderables(renderableList);
             std::sort(renderableList.begin(), renderableList.end());
             for (auto& pair : renderableList) {
                 const engine::Renderable* renderable = reinterpret_cast<const engine::Renderable*>(pair.second);

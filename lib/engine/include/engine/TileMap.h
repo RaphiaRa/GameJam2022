@@ -15,8 +15,6 @@ class TileMap : public Renderable {
     void copyTo(Renderer& renderer) const override;
 
   private:
-    void notifyAttach() override;
-    void notifyDetach() override;
     void update(const math::Vector<double, 3>& pos, const math::Vector<double, 2>& scale, double rot, bool isFlipped, bool isVisible) override;
 
     int width_;
