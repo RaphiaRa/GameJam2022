@@ -30,6 +30,7 @@ add_executable(Game
   src/Character.cpp #
   src/Room.cpp #
   src/Mob.cpp #
+  src/Ui.cpp
 )
 
 target_link_libraries(Game 

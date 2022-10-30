@@ -3,6 +3,8 @@
 
 #include "GameEntity.h"
 #include "World.h"
+#include "Ui.h"
+#include <engine/Sprite.h>
 
 class MainScene final : public GameEntity {
   public:
@@ -13,7 +15,9 @@ class MainScene final : public GameEntity {
 
   private:
     engine::SceneNode node_;
+    engine::SceneNode apNode_;
     World world_;
+    Ui ui_;
 };
 
 #endif

@@ -13,6 +13,8 @@ class World : public GameEntity {
     void update(std::chrono::nanoseconds delta) override;
     void attachTo(engine::SceneNode* node) override;
     void detachFrom(engine::SceneNode* node) override;
+    int getPlayerAp() const { return character_.stamina(); }
+    int getPlayerHp() const { return character_.hp(); }
 
   private:
     engine::SceneNode node_;

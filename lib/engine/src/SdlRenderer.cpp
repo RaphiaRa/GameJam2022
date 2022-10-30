@@ -63,10 +63,12 @@ void sdl::Renderer::render(const engine::Texture& tex, const Area& src, const Ar
     sdl_dest.w = dest.width;
     sdl_dest.h = dest.height;
 
+    /**
     if (sdl_dest.w == 0 && sdl_dest.h == 0) {
         sdl_dest.w = tex.width();
         sdl_dest.h = tex.height();
     }
+    **/
 
     const SdlTexture& sdlTex = dynamic_cast<const SdlTexture&>(tex);
     if (src == engine::nullArea) {

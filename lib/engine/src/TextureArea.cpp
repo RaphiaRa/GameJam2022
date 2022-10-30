@@ -15,10 +15,14 @@ void TextureArea::copyTo(Renderer& renderer, const Area& dest, double rot, bool 
 
 int TextureArea::width() const noexcept
 {
+    if (area_.width == 0)
+        return texture_->width();
     return area_.width;
 }
 
 int TextureArea::height() const noexcept
 {
+    if (area_.height == 0)
+        return texture_->height();
     return area_.height;
 }
