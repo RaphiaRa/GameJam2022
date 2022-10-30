@@ -1,7 +1,7 @@
 #ifndef ENGINE_MATH_H
 #define ENGINE_MATH_H
-#include <array>
 #include <algorithm>
+#include <array>
 #include <cmath>
 
 namespace engine
@@ -64,7 +64,7 @@ template<typename T, std::size_t N>
 engine::math::Vector<T, N> operator-(const engine::math::Vector<T, N>& v, const engine::math::Vector<T, N>& w)
 {
     engine::math::Vector<T, N> r;
-    for (int i = 0; i < N; ++i)
+    for (std::size_t i = 0; i < N; ++i)
         r[i] = v[i] - w[i];
     return r;
 }
