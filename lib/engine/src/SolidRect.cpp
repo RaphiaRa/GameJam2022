@@ -21,7 +21,13 @@ void SolidRect::update(const math::Vector<double, 3>& pos, const math::Vector<do
 bool SolidRect::check(const SolidRect& rh, math::Vector<double, 2>& rebound) const
 {
     if (a_[0] < rh.b_[0] && b_[0] > rh.a_[0] && a_[1] > rh.b_[1] && b_[1] < rh.a_[1]) {
-        auto v          = rh.pos_ - pos_;
+        auto v   = rh.pos_ - pos_;
+        auto len = sqrt((math::std_norm(v)));
+        if (len < std::numeric_limits<double>::epsilon()) {
+            rebound[0] = 1.0;
+            rebound[0] = 0.0;
+            return true;
+        }
         auto normalized = v / sqrt((math::std_norm(v)));
         rebound         = -1 * normalized;
         return true;

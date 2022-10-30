@@ -34,6 +34,7 @@ void World::update(std::chrono::nanoseconds delta)
         charCorrection[1] = -speed;
 
     character_.update(delta);
+
     auto iter = mobs_.begin();
     while (iter != mobs_.end()) {
         auto& mob = *iter;
@@ -66,6 +67,20 @@ void World::update(std::chrono::nanoseconds delta)
         }
     }
 
+    // mob colissions
+    for (auto& moba : mobs_) {
+        for (auto& mobb : mobs_) {
+            engine::math::Vector<double, 2UL> rebound;
+            if (moba->hitBox().check(mobb->hitBox(), rebound)) {
+                engine::math::Vector<double, 3> mobCorrection = {};
+
+                mobCorrection[0] = moba->speed() * rebound[0];
+                mobCorrection[1] = moba->speed() * rebound[1];
+                moba->node().translate(mobCorrection);
+            }
+        }
+    }
+
     node_.translate(correction);
     character_.node().translate(charCorrection);
 
@@ -75,7 +90,7 @@ void World::update(std::chrono::nanoseconds delta)
         if (sinceLastWave_ >= std::chrono::seconds(2)) {
             std::random_device dev;
             std::mt19937 rng(dev());
-            std::uniform_int_distribution<std::mt19937::result_type> dist(8, 30 + score_);
+            std::uniform_int_distribution<std::mt19937::result_type> dist(8, 25 + score_ / 3);
             int count = (int)dist(rng);
             for (int k = 0; k < count; ++k) {
                 int xshift = dist(rng);

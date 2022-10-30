@@ -11,7 +11,7 @@ Attack::Attack()
     node_.attach(&animation_);
     node_.attach(&boxNode_);
     boxNode_.attach(&solid_);
-    boxNode_.setPos({ 0.0, 20.0, 0 });
+    boxNode_.setPos({ -15.0, 20.0, 0 });
     node_.setPos({ -20.0, -20.0, 0 });
 }
 
@@ -89,6 +89,13 @@ void Character::update(std::chrono::nanoseconds delta)
             immuneTime_ = std::chrono::nanoseconds(0);
         }
     }
+    if (sp_ < 50) {
+        recoverTime_ += delta;
+        if (recoverTime_ > std::chrono::milliseconds(250)) {
+            sp_ += 1;
+            recoverTime_ = std::chrono::nanoseconds(0);
+        }
+    }
 }
 
 void Character::attachTo(engine::SceneNode* node)
@@ -116,8 +123,11 @@ void Character::handleInput(const engine::KeyEvent& ev)
         if (ev.key == engine::Key::d)
             motion_.right = 1;
         if (ev.key == engine::Key::q && qPushed_ == false) {
-            attack_.start();
-            qPushed_ = true;
+            if (sp_ > 5) {
+                attack_.start();
+                qPushed_ = true;
+                sp_ -= 5;
+            }
         }
     } else if (ev.type == engine::KeyEventType::up) {
         animatedSprite_.stop();

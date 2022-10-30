@@ -50,6 +50,7 @@ class Character : public GameEntity {
     void damage(int dmg);
     int power() const { return power_; }
     int hp() const { return hp_; }
+    int stamina() const { return sp_; }
 
   private:
     engine::TileSet tileSet_;
@@ -61,10 +62,12 @@ class Character : public GameEntity {
     Attack attack_;
     engine::SolidRect solid_;
     bool qPushed_;
-    int hp_                              = 100;
-    int power_                           = 25;
-    std::chrono::nanoseconds immuneTime_ = std::chrono::nanoseconds(0);
-    bool isImmune_                       = false;
+    int hp_                               = 100;
+    int sp_                               = 50;
+    std::chrono::nanoseconds recoverTime_ = std::chrono::nanoseconds(0);
+    int power_                            = 20;
+    std::chrono::nanoseconds immuneTime_  = std::chrono::nanoseconds(0);
+    bool isImmune_                        = false;
 };
 
 #endif

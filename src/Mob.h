@@ -18,6 +18,8 @@ class Mob : public GameEntity {
     void damage(int dmg);
     int hp() const { return hp_; }
     engine::SceneNode& node() { return node_; }
+    bool isActive() const { return isActive_; }
+    double speed() const { return speed_; }
 
   private:
     engine::SceneNode node_;
@@ -25,12 +27,14 @@ class Mob : public GameEntity {
     engine::AnimatedSprite animation_;
     engine::SolidRect solid_;
     engine::SceneNode& followPoint_;
-    double speed_                        = 1.0;
+    double speed_                        = 1.5;
     int power_                           = 3;
-    int hp_                              = 110;
+    int hp_                              = 40;
     bool isActive_                       = false;
     std::chrono::nanoseconds immuneTime_ = std::chrono::nanoseconds(0);
     bool isImmune                        = false;
+    int xmshift_                         = 0;
+    int ymshift_                         = 0;
 };
 
 #endif
