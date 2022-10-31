@@ -13,7 +13,7 @@ sdl2_image
 
 ``` sh
 git clone git@github.com:RaphiaRa/GameJam2022.git
-git submodule update --iniit
+git submodule update --init
 mkdir build
 cd build
 cmake ../ -DDISABLE_TESTS=YES
